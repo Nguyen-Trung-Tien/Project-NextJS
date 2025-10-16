@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 
 const page = () => {
   const router = useRouter();
+
   const handleBackHome = () => {
     router.push("/");
   };

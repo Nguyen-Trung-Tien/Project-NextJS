@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import AppHeader from "@/components/app.header";
+import AppFooter from "@/components/app.footer";
+import Container from "react-bootstrap/Container";
+import { ToastContainer, toast } from "react-toastify";
 // import "./globals.css";
 
 const geistSans = Geist({
@@ -27,9 +30,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <div>Header</div>
-        {children}
-        <div>Footer</div>
+        <AppHeader />
+        <Container>{children}</Container>
+        <AppFooter />
+        <ToastContainer
+          position="bottom-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </body>
     </html>
   );
