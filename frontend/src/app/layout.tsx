@@ -31,7 +31,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <AppHeader />
-        <Container>{children}</Container>
+        <Container style={{ minHeight: "calc(100vh - 106px)" }}>
+          {children}
+        </Container>
         <AppFooter />
         <ToastContainer
           position="bottom-center"
