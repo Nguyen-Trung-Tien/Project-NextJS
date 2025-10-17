@@ -3,6 +3,7 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import AppModal from "./create.module";
 import { useState } from "react";
+import UpdateModal from "./update.mudule";
 
 interface IProps {
   blogs: IBlog[];
@@ -10,7 +11,10 @@ interface IProps {
 
 const AppTable = (props: IProps) => {
   const { blogs } = props;
+  const [blog, setBlog] = useState<IBlog | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
+
   return (
     <>
       <div
@@ -32,16 +36,23 @@ const AppTable = (props: IProps) => {
           </tr>
         </thead>
         <tbody>
-          {blogs?.map((blog) => {
+          {blogs?.map((item) => {
             return (
-              <tr key={blog.id}>
-                <td>{blog.id}</td>
-                <td>{blog.title}</td>
-                <td>{blog.author}</td>
+              <tr key={item.id}>
+                <td>{item.id}</td>
+                <td>{item.title}</td>
+                <td>{item.author}</td>
                 <td>
                   <Button>View</Button>
 
-                  <Button variant="warning" className="mx-3">
+                  <Button
+                    variant="warning"
+                    className="mx-3"
+                    onClick={() => {
+                      setBlog(item);
+                      setShowUpdateModal(true);
+                    }}
+                  >
                     Edit
                   </Button>
                   <Button variant="danger">Edit</Button>
@@ -52,6 +63,12 @@ const AppTable = (props: IProps) => {
         </tbody>
       </Table>
       <AppModal showModal={showModal} setShowModal={setShowModal} />
+      <UpdateModal
+        showUpdateModal={showUpdateModal}
+        setShowUpdateModal={setShowUpdateModal}
+        blog={blog}
+        setBlog={setBlog}
+      />
     </>
   );
 };
