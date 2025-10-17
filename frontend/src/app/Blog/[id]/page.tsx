@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import useSWR, { Fetcher } from "swr";
-const ViewDetailBlog = ({ params }: { params: { id: string } }) => {
+const ViewDetailBlog = () => {
+  const params = useParams<{ tag: string; id: string }>();
   const router = useRouter();
   const fetcher: Fetcher<IBlog, string> = (url: string) =>
     fetch(url).then((res) => res.json());

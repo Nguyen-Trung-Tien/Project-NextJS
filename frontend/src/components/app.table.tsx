@@ -5,6 +5,8 @@ import AppModal from "./create.module";
 import { useState } from "react";
 import UpdateModal from "./update.mudule";
 import Link from "next/link";
+import useSWR, { mutate } from "swr";
+import { toast } from "react-toastify";
 
 interface IProps {
   blogs: IBlog[];
@@ -16,6 +18,28 @@ const AppTable = (props: IProps) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
 
+  const handleDelete = (id: number) => {
+    if (confirm(`Do you want delete blog (id = ${id})`)) {
+      fetch(`http://localhost:8000/blogs/${id}`, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json, text/plain,*/*",
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          toast.success("Delete success...");
+          setShowModal(false);
+          mutate("http://localhost:8000/blogs");
+        })
+        .catch((error) => {
+          console.error("Error creating blog:", error);
+          toast.error("An error occurred during creation.");
+        });
+    }
+  };
   return (
     <>
       <div
@@ -58,7 +82,12 @@ const AppTable = (props: IProps) => {
                   >
                     Edit
                   </Button>
-                  <Button variant="danger">Edit</Button>
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDelete(item.id)}
+                  >
+                    Delete
+                  </Button>
                 </td>
               </tr>
             );
