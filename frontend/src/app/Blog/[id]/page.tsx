@@ -9,7 +9,6 @@ const ViewDetailBlog = () => {
   const router = useRouter();
   const fetcher: Fetcher<IBlog, string> = (url: string) =>
     fetch(url).then((res) => res.json());
-
   const { data, error, isLoading } = useSWR(
     `http://localhost:8000/blogs/${params.id}`,
     fetcher,
@@ -19,7 +18,6 @@ const ViewDetailBlog = () => {
       revalidateOnReconnect: false,
     }
   );
-  console.log(data);
   if (isLoading) return <div>Loading...</div>;
   return (
     <div>
